@@ -4,9 +4,9 @@ define :cabal_package, :action => :install, :global => true do
       command "cabal install #{params[:name]}#{' --global' if params[:global]}"
       not_if do
         if params[:global]
-          File.directory?("#{node[:haskell][:lib_dir]}/#{params[:name]}")
+          File.directory?("#{node[:haskell][:lib_dir]}/#{params[:name]}-#{params[:version]}")
         else
-          File.directory?("#{node[:haskell][:cabal][:package_dir]}/#{params[:name]}")
+          File.directory?("#{node[:haskell][:cabal][:package_dir]}/#{params[:name]}-#{params[:version]}")
         end
       end
     end

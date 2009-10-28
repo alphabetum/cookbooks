@@ -19,7 +19,7 @@ define :haskell_package, :action => :install do
         runhaskell Setup install
       CMD
       not_if do 
-        File.directory?(params[:prefix] ? "#{params[:prefix]}/lib/#{params[:name]}" : "#{node[:haskell][:lib_dir]}/#{params[:name]}") 
+        File.directory?(params[:prefix] ? "#{params[:prefix]}/lib/#{params[:name]}-#{params[:version]}" : "#{node[:haskell][:lib_dir]}/#{params[:name]}-#{params[:version]}") 
       end
     end
   end

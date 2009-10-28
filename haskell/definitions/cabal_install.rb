@@ -15,12 +15,12 @@ define :cabal_install, :action => :install do
       cwd "/usr/local/src/cabal-install-#{node[:haskell][:cabal][:version]}"
       command "./bootstrap.sh"
       not_if do 
-        File.directory?("~/.cabal")
+        File.directory?(File.expand_path("~/.cabal"))
       end
     end
     
     link "/usr/bin/cabal" do
-      to "~/.cabal/bin/cabal"
+      to File.expand_path("~/.cabal/bin/cabal")
       not_if do 
         File.symlink?("/usr/bin/cabal")
       end

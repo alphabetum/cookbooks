@@ -16,14 +16,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-db_password = ""
-chars = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a
-20.times { |i| db_password << chars[rand(chars.size-1)] }
 
-set_unless[:mysql][:server_root_password] = db_password
+require 'openssl'
+
+pw = String.new
+
+while pw.length < 20
+  pw << OpenSSL::Random.random_bytes(1).gsub(/\W/, '')
+end
+
+set_unless[:mysql][:server_root_password] = pw
 set_unless[:mysql][:bind_address]         = ipaddress
 set_unless[:mysql][:datadir]              = "/var/lib/mysql"
-set_unless[:mysql][:ec2_path]             = "/mnt/mysql"
+
+if attribute?(:ec2)
+  set_unless[:mysql][:ec2_path]    = "/mnt/mysql"
+  set_unless[:mysql][:ebs_vol_dev] = "/dev/sdi"
+  set_unless[:mysql][:ebs_vol_size] = 50
+end
 
 # Tunables
 set_unless[:mysql][:tunable][:key_buffer]          = "250M"

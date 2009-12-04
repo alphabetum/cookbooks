@@ -66,3 +66,15 @@ end
     action :install
   end
 end
+
+File.open('/etc/environment', 'r+') do |f|
+  lines = f.readlines
+  lines.each do |l|
+    unless l.match('ruby-enterprise')
+      l.gsub!(%r{PATH=\"/usr/local}, "PATH=\"#{node[:ruby_enterprise_edition][:install_path]}/bin:/usr/local")
+    end
+  end
+  f.pos = 0
+  f.print lines
+  f.truncate(f.pos)
+end

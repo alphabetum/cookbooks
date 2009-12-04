@@ -1,0 +1,49 @@
+{
+  "maintainer": "Opscode, Inc.",
+  "description": "Installs locate",
+  "recommendations": {
+
+  },
+  "maintainer_email": "cookbooks@opscode.com",
+  "recipes": {
+    "locate": ""
+  },
+  "suggestions": {
+
+  },
+  "platforms": {
+    "ubuntu": [
+
+    ],
+    "centos": [
+
+    ],
+    "debian": [
+
+    ],
+    "redhat": [
+
+    ]
+  },
+  "version": "0.7.0",
+  "name": "locate",
+  "conflicting": {
+
+  },
+  "attributes": {
+
+  },
+  "providing": {
+    "locate": [
+
+    ]
+  },
+  "license": "Apache 2.0",
+  "long_description": "",
+  "replacing": {
+
+  },
+  "dependencies": {
+
+  }
+}

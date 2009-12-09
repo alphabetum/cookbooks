@@ -41,9 +41,9 @@ safe do
   mysqldump do
     options "-ceKq --single-transaction --create-options"
   
-    <%= %Q[user "#{@node[:astrails_rails][:mysqldump][:user]}"]         if @node[:astrails_rails][:mysqldump][:user]      %>
-    <%= %Q[password "#{@node[:astrails_rails][:mysqldump][:password]}"] if @node[:astrails_rails][:mysqldump][:password]  %>
-    <%= %Q[socket "#{@node[:astrails_rails][:mysqldump][:socket]}"]     if @node[:astrails_rails][:mysqldump][:socket]    %>
+    <%= %Q[user "#{@node[:astrails_safe][:mysqldump][:user]}"]         if @node[:astrails_safe][:mysqldump][:user]      %>
+    <%= %Q[password "#{@node[:astrails_safe][:mysqldump][:password]}"] if @node[:astrails_safe][:mysqldump][:password]  %>
+    <%= %Q[socket "#{@node[:astrails_safe][:mysqldump][:socket]}"]     if @node[:astrails_safe][:mysqldump][:socket]    %>
     
     <% @node[:astrails_safe][:pgdump][:databases].to_a.each do |d| %>
     <% if d.respond_to?(:each_pair) %>

@@ -7,7 +7,7 @@ safe do
   <% if @node[:astrails_safe][:s3] %>
   s3 do
     <%= %Q[key "#{@node[:astrails_safe][:s3][:key]}"]       if @node[:astrails_safe][:s3][:key]     %>
-    <%= %Q[secret "#{@node[:astrails_safe][:secret]}"]      if @node[:astrails_safe][:secret]       %>
+    <%= %Q[secret "#{@node[:astrails_safe][:s3][:secret]}"] if @node[:astrails_safe][:s3][:secret]  %>
     <%= %Q[bucket "#{@node[:astrails_safe][:s3][:bucket]}"] if @node[:astrails_safe][:s3][:bucket]  %>
     <%= %Q[path "#{@node[:astrails_safe][:s3][:path]}"]     if @node[:astrails_safe][:s3][:path]    %>
   end

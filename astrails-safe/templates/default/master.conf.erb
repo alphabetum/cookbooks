@@ -45,7 +45,7 @@ safe do
     <%= %Q[password "#{@node[:astrails_safe][:mysqldump][:password]}"] if @node[:astrails_safe][:mysqldump][:password]  %>
     <%= %Q[socket "#{@node[:astrails_safe][:mysqldump][:socket]}"]     if @node[:astrails_safe][:mysqldump][:socket]    %>
     
-    <% @node[:astrails_safe][:pgdump][:databases].to_a.each do |d| %>
+    <% @node[:astrails_safe][:mysqldump][:databases].to_a.each do |d| %>
     <% if d.respond_to?(:each_pair) %>
     <% d.each_pair do |k, v| %>
     database "<%= k %>" do

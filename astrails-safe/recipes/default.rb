@@ -37,7 +37,7 @@ template "/etc/astrails-safe/master.conf" do
 end
 
 cron "astrails_safe_backup" do
-  command "astrails-safe /etc/astrails-safe/master.conf" 
+  command "#{node[:languages][:ruby][:gems_dir].match(/(.*)\/lib/)[1]}/bin/astrails-safe /etc/astrails-safe/master.conf" 
   hour "2"
   minute "0"
 end

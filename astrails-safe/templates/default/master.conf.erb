@@ -89,7 +89,7 @@ safe do
       <% @node[:astrails_safe][:tar][:archives][a][:files].to_a.each do |f| %>
       files "<%= f %>"
       <% end %>
-      <% @node[:astrails_safe][:tar][:archives][a][:excludes].to_a.each do |e| %>
+      <% @node[:astrails_safe][:tar][:archives][a][:exclude].to_a.each do |e| %>
       exclude "<%= e %>"
       <% end %>
     end

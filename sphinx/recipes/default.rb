@@ -32,6 +32,6 @@ when "ubuntu"
   execute "Make and install sphinx" do
     cwd "/usr/local/src/sphinx-#{node[:sphinx][:version]}"
     command "./configure --prefix=/usr/local && make && sudo make install"
-    not_id { ::File.exist?("/usr/local/bin/indexer") }
+    not_if { ::File.exist?("/usr/local/bin/indexer") }
   end
 end

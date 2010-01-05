@@ -78,12 +78,28 @@ if (node[:ec2] && ! FileTest.directory?(node[:mysql][:ec2_path]))
     group "mysql"
   end
 
-  link node[:mysql][:datadir] do
-   to node[:mysql][:ec2_path]
+  mount node[:mysql][:datadir] do
+    device node[:mysql][:ec2_path]
+    fstype "none"
+    options "bind,rw"
+    action :mount
   end
 
   service "mysql" do
     action :start
   end
 
+end
+
+execute "mysql-install-privileges" do
+  command "/usr/bin/mysql -u root -p#{node[:mysql][:server_root_password]} < /etc/mysql/grants.sql"
+  action :nothing
+end
+
+template "/etc/mysql/grants.sql" do
+  source "grants.sql.erb"
+  owner "root"
+  group "root"
+  mode "0600"
+  notifies :run, resources(:execute => "mysql-install-privileges"), :immediately
 end

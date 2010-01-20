@@ -22,7 +22,7 @@ when "ubuntu"
     tetex-base
     tetex-bin
     tetex-extra
-    latex-ucs
+    texlive-latex-recommended
   ].each do |p|
     package p do
       action :upgrade

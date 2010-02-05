@@ -26,20 +26,20 @@
 
 case node[:platform]
 when "ubuntu"
-  remote_file "/usr/local/src/#{node[:ruby_enterprise_edition][:package_name]}" do
-    source node[:ruby_enterprise_edition][:url]
-    not_if { ::File.exist?("/usr/local/src/#{node[:ruby_enterprise_edition][:package_name]}") }
+  remote_file "/usr/local/src/#{node[:ruby_ee][:package_name]}" do
+    source node[:ruby_ee][:url]
+    not_if { ::File.exist?("/usr/local/src/#{node[:ruby_ee][:package_name]}") }
   end
   
-  execute "install #{node[:ruby_enterprise_edition][:package_name]}" do
+  execute "install #{node[:ruby_ee][:package_name]}" do
     cwd "/usr/local/src"
-    command "dpkg -i #{node[:ruby_enterprise_edition][:package_name]}"
+    command "dpkg -i #{node[:ruby_ee][:package_name]}"
     not_if { ::File.exists?("/usr/local/bin/ruby") }
   end
   
   %w(ruby rake irb gem).each do |cmd|
     link "/usr/bin/#{cmd}" do
-      to "#{node[:ruby_enterprise_edition][:install_path]}/bin/#{cmd}"
+      to "#{node[:ruby_ee][:install_path]}/bin/#{cmd}"
     end
   end
   
@@ -59,31 +59,31 @@ else
     package p
   end
   
-  remote_file "/usr/local/src/ruby-enterprise-#{node[:ruby_enterprise_edition][:version]}.tar.gz" do
-    source node[:ruby_enterprise_edition][:url]
-    not_if { ::File.exist?("/usr/local/src/ruby-enterprise-#{node[:ruby_enterprise_edition][:version]}.tar.gz") }
+  remote_file "/usr/local/src/ruby-enterprise-#{node[:ruby_ee][:version]}.tar.gz" do
+    source node[:ruby_ee][:url]
+    not_if { ::File.exist?("/usr/local/src/ruby-enterprise-#{node[:ruby_ee][:version]}.tar.gz") }
   end
    
   execute "Expand ruby enterprise edition tarball" do
     cwd "/usr/local/src"
-    command "tar xzf ruby-enterprise-#{node[:ruby_enterprise_edition][:version]}.tar.gz"
-    not_if { ::File.directory?("/usr/local/src/ruby-enterprise-#{node[:ruby_enterprise_edition][:version]}") }
+    command "tar xzf ruby-enterprise-#{node[:ruby_ee][:version]}.tar.gz"
+    not_if { ::File.directory?("/usr/local/src/ruby-enterprise-#{node[:ruby_ee][:version]}") }
   end
    
   execute "Install ruby enterprise edition" do
-    cwd "/usr/local/src/ruby-enterprise-#{node[:ruby_enterprise_edition][:version]}"
-    command "./installer --auto=#{node[:ruby_enterprise_edition][:install_path]} && echo '#{node[:ruby_enterprise_edition][:version]}' > /etc/ruby-enterprise-version"
+    cwd "/usr/local/src/ruby-enterprise-#{node[:ruby_ee][:version]}"
+    command "./installer --auto=#{node[:ruby_ee][:install_path]} && echo '#{node[:ruby_ee][:version]}' > /etc/ruby-enterprise-version"
     not_if {
       ::File.exists?('/etc/ruby-enterprise-version') &&
-      ::File.read('/etc/ruby-enterprise-version').chomp == node[:ruby_enterprise_edition][:version] && 
-      ::File.exist?("#{node[:ruby_enterprise_edition][:install_path]}/bin/ruby") && 
-      system(node[:ruby_enterprise_edition][:cow_friendly])
+      ::File.read('/etc/ruby-enterprise-version').chomp == node[:ruby_ee][:version] && 
+      ::File.exist?("#{node[:ruby_ee][:install_path]}/bin/ruby") && 
+      system(node[:ruby_ee][:cow_friendly])
     }
   end
    
   %w(ruby rake irb gem).each do |cmd|
     link "/usr/bin/#{cmd}" do
-      to "#{node[:ruby_enterprise_edition][:install_path]}/bin/#{cmd}"
+      to "#{node[:ruby_ee][:install_path]}/bin/#{cmd}"
     end
   end
   
@@ -102,7 +102,7 @@ else
     lines = f.readlines
     lines.each do |l|
       unless l.match('ruby-enterprise')
-        l.gsub!(%r{PATH=\"/usr/local}, "PATH=\"#{node[:ruby_enterprise_edition][:install_path]}/bin:/usr/local")
+        l.gsub!(%r{PATH=\"/usr/local}, "PATH=\"#{node[:ruby_ee][:install_path]}/bin:/usr/local")
       end
     end
     f.pos = 0

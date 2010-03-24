@@ -2,12 +2,16 @@ ruby_ee Mash.new unless attribute?("ruby_ee")
 
 case platform
 when "ubuntu"
-  ruby_ee[:version] = '1.8.7-2009.10_i386'
+  case kernel[:machine]
+  when "i386"
+    ruby_ee[:version] = '1.8.7-2009.10_i386'
+    ruby_ee[:url] = "http://rubyforge.org/frs/download.php/66164/ruby-enterprise_1.8.7-2009.10_i386.deb"
+  when "x86_64"
+    ruby_ee[:version] = '1.8.7-2009.10_amd64'
+    ruby_ee[:url] = "http://rubyforge.org/frs/download.php/66163/ruby-enterprise_1.8.7-2009.10_amd64.deb"
+  end
   ruby_ee[:package_name] = "ruby-enterprise_#{ruby_ee[:version]}.deb"
   ruby_ee[:install_path] = "/usr/local"
-  
-  # note: the id after download.php is dependent on the package
-  ruby_ee[:url] = "http://rubyforge.org/frs/download.php/66164/#{ruby_ee[:package_name]}"
 else
   ruby_ee[:version] = '1.8.7-20090928' unless ruby_ee.has_key?(:version)
   ruby_ee[:install_path] = "/opt/ruby-enterprise-#{ruby_ee[:version]}" unless ruby_ee.has_key?(:install_path)

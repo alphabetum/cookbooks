@@ -18,7 +18,6 @@
 #
 
 gem_package "astrails-safe" do
-  source "http://gemcutter.org"
   action :install
 end
 

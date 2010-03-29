@@ -3,7 +3,7 @@ ruby_ee Mash.new unless attribute?("ruby_ee")
 case platform
 when "ubuntu"
   case kernel[:machine]
-  when "i386"
+  when "i386", "i686"
     ruby_ee[:version] = '1.8.7-2009.10_i386'
     ruby_ee[:url] = "http://rubyforge.org/frs/download.php/66164/ruby-enterprise_1.8.7-2009.10_i386.deb"
   when "x86_64"

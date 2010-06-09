@@ -49,7 +49,6 @@ when "ubuntu"
 
   %W[ ohai chef ].each do |g|
     gem_package g do
-      source "http://gems.opscode.com"
       action :install
     end
   end
